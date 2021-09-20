@@ -18,6 +18,8 @@ namespace WebRestaurantes.Domain
 
             services.AddScoped<ISchedulingService, SchedulingService>();
 
+            services.AddScoped<IRestaurantExtensionService, RestaurantExtensionService>();
+
             return services;
         }
     }

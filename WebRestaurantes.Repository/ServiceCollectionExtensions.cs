@@ -28,6 +28,8 @@ namespace WebRestaurantes.Repository
 
             services.AddScoped<ISchedulingRepository, SchedulingRepository>();
 
+            services.AddScoped<IRestaurantExtensionRepository, RestaurantExtensionRepository>();
+
             return services;
         }
     }
