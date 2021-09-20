@@ -31,6 +31,8 @@ namespace WebRestaurantes.Repository
 
         public DbSet<SchedulingOrder> Times { get; set; }
 
+        public DbSet<Table> Tables { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,6 +41,7 @@ namespace WebRestaurantes.Repository
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new TableConfiguration());
 
             modelBuilder.Entity<RestaurantExtension>()
             .HasOne(s => s.DomainValue)

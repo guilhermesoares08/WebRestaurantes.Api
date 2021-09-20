@@ -44,6 +44,6 @@ namespace WebRestaurantes.WebAPI.Controllers
                 string exMessage = ex.Message;
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou{exMessage + "|" + innerEx}");
             }
-        }       
+        }
     }
 }
