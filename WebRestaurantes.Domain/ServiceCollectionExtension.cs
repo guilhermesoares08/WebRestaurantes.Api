@@ -20,6 +20,8 @@ namespace WebRestaurantes.Domain
 
             services.AddScoped<IRestaurantExtensionService, RestaurantExtensionService>();
 
+            services.AddScoped<ITableService, TableService>();
+
             return services;
         }
     }
