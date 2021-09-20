@@ -32,6 +32,8 @@ namespace WebRestaurantes.Repository
 
             services.AddScoped<ITableRepository, TableRepository>();
 
+            services.AddScoped<IImageRepository, ImageRepository>();
+
             return services;
         }
     }

@@ -11,7 +11,7 @@ namespace WebRestaurantes.Domain
         {
 
             services.AddScoped<IRestaurantService, RestaurantService>();
-            
+
             services.AddScoped<IDomainService, DomainService>();
 
             services.AddScoped<IRestaurantAddressService, RestaurantAddressService>();
@@ -21,6 +21,8 @@ namespace WebRestaurantes.Domain
             services.AddScoped<IRestaurantExtensionService, RestaurantExtensionService>();
 
             services.AddScoped<ITableService, TableService>();
+
+            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }
