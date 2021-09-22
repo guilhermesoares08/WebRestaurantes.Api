@@ -1,18 +1,24 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using WebRestaurantes.Domain;
 
 
 namespace WebRestaurantes.Repository
 {
-    public class WebRestaurantesContext : IdentityDbContext<User, Role, int,
-                                                    IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
-                                                    IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class WebRestaurantesContext : DbContext
     {
-        public WebRestaurantesContext(DbContextOptions<WebRestaurantesContext> options) : base(options) { }
+        private readonly IConfiguration _configuration;
+
+        public WebRestaurantesContext(DbContextOptions<WebRestaurantesContext> options,
+            IConfiguration configuration)
+            : base(options)
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<Restaurant> Restaurants { get; set; }
+
         public DbSet<Image> Images { get; set; }
 
         public DbSet<RestaurantAddress> RestaurantAddress { get; set; }
@@ -32,6 +38,12 @@ namespace WebRestaurantes.Repository
         public DbSet<SchedulingOrder> Times { get; set; }
 
         public DbSet<Table> Tables { get; set; }
+
+        public DbSet<User> User { get; set; }
+
+        public DbSet<Role> Role { get; set; }
+
+        public DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +67,6 @@ namespace WebRestaurantes.Repository
                {
                    eb.HasNoKey();
                });
-        }
+        }        
     }
 }

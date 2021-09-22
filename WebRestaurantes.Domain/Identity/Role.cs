@@ -3,8 +3,20 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WebRestaurantes.Domain
 {
-    public class Role : IdentityRole<int>
+    public class Role 
     {
-        public List<UserRole> UserRoles { get; set; }
+        public int Id { get; set; }
+
+        public string Description { get; set; }
+
+        public Role Clone()
+        {
+            Role r = new Role();
+
+            r.Id = this.Id;
+            r.Description = this.Description;
+
+            return r;
+        }
     }
 }

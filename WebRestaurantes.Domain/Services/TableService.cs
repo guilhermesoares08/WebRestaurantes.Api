@@ -13,5 +13,10 @@ namespace WebRestaurantes.Domain
         {
             return await _repository.GetTablesByRestaurant(restaurantId);
         }
+
+        //public async Task<IList<Table>> GetAvailableRestaurantTables(int restaurantId)
+        //{
+        //    //return await _repository.GetAvailableRestaurantTables(restaurantId);
+        //}
     }
 }

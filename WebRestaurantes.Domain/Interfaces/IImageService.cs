@@ -1,6 +1,6 @@
 ﻿namespace WebRestaurantes.Domain
 {
-    interface IImageService
+    public interface IImageService
     {
     }
 }

@@ -24,6 +24,8 @@ namespace WebRestaurantes.Domain
 
             services.AddScoped<IImageService, ImageService>();
 
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             return services;
         }
     }
