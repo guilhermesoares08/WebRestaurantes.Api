@@ -45,5 +45,24 @@ namespace WebRestaurantes.WebAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou{exMessage + "|" + innerEx}");
             }
         }
+
+
+        [HttpPost("availableSchedules/{restaurantId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAvailableSchedules(int restaurantId)
+        {
+            try
+            {
+                var results = await _schedulingService.GetScheduleByRestaurant(restaurantId);
+
+                return Ok(results);
+            }
+            catch (System.Exception ex)
+            {
+                string innerEx = "";//ex.InnerException.Message;
+                string exMessage = ex.Message;
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou{exMessage + "|" + innerEx}");
+            }
+        }
     }
 }

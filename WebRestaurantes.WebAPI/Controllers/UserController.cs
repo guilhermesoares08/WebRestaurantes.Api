@@ -22,46 +22,53 @@ namespace WebRestaurantes.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IAuthenticationService _authenticationService;
 
         public UserController(IConfiguration config,
-                              UserManager<User> userManager,
-                              SignInManager<User> signInManager,
+                              IAuthenticationService authenticationService,
                               IMapper mapper)
         {
-            _signInManager = signInManager;
             _mapper = mapper;
             _config = config;
-            _userManager = userManager;
+            _authenticationService = authenticationService;
         }
 
         [HttpGet("GetUser")]
         [AllowAnonymous] //TODO: remover isso futuramente
-        public IActionResult GetUser()
+        public IActionResult GetUserById(int userId)
         {
-            return Ok(new UserDto());
+            var user = _authenticationService.GetUserById(userId);
+            var userToReturn = _mapper.Map<UserDto>(user);
+
+            if (user == null)
+            {
+                return NotFound($"Usuário {userId} não encontrado");
+            }
+
+            //var responseUser = _mapper.Map<UserDto>(user);
+
+            return Ok(userToReturn);
         }
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(UserDto userDto)
+        public IActionResult Register(UserDto userDto)
         {
             try
             {
                 var user = _mapper.Map<User>(userDto);
 
-                var result = await _userManager.CreateAsync(user, userDto.Password);
+                var createdUser = _authenticationService.CreateUser(user);
+
+                if (createdUser == null)
+                {
+                    return ValidationProblem("ocorreu algum problema ao criar o usuário");
+                }
 
                 var userToReturn = _mapper.Map<UserDto>(user);
 
-                if (result.Succeeded)
-                {
-                    return Created("GetUser", userToReturn);
-                }
-
-                return BadRequest(result.Errors);
+                return Created("GetUser", userToReturn);
             }
             catch (System.Exception ex)
             {
@@ -71,25 +78,20 @@ namespace WebRestaurantes.WebAPI.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDto userLogin)
+        public IActionResult Login(UserLoginDto userLogin)
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(userLogin.UserName);
+                User usr = _authenticationService.ValidateUser(userLogin.Login, userLogin.Password);                
 
-                var result = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
-
-                if (result.Succeeded)
+                if (usr != null)
                 {
-                    var appUser = await _userManager.Users
-                        .FirstOrDefaultAsync(u => u.NormalizedUserName == userLogin.UserName.ToUpper());
-
-                    var userToReturn = _mapper.Map<UserLoginDto>(appUser);
+                    var mapUserLogin = _mapper.Map<UserLoginDto>(usr);
 
                     return Ok(new
                     {
-                        token = GenerateJWToken(appUser).Result,
-                        user = userToReturn
+                        token = GenerateJWToken(usr).Result,
+                        user = mapUserLogin
                     });
                 }
 
@@ -109,12 +111,7 @@ namespace WebRestaurantes.WebAPI.Controllers
             new Claim(ClaimTypes.Name, user.UserName)
         };
 
-            var roles = await _userManager.GetRolesAsync(user);
-
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            claims.Add(new Claim(ClaimTypes.Role, user.Role.Description));
 
             var key = new SymmetricSecurityKey(Encoding.ASCII
                 .GetBytes(_config.GetSection("AppSettings:Token").Value));

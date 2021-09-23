@@ -50,22 +50,22 @@ namespace WebRestaurantes.WebAPI
             services.AddControllers();
             services.AddCors();
             services.AddAutoMapper();
-            IdentityBuilder builder = services.AddIdentityCore<User>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 4;
-            });
+            //IdentityBuilder builder = services.AddIdentityCore<User>(options =>
+            //{
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequiredLength = 4;
+            //});
             // cria o builder para ser do tipo associacao role
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             // dizer qual context que está a autenticacao
-            builder.AddEntityFrameworkStores<WebRestaurantesContext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
+            //builder.AddEntityFrameworkStores<WebRestaurantesContext>();
+            //builder.AddRoleValidator<RoleValidator<Role>>();
             // quem vai ser o gerenciador dos papeis
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
+            //builder.AddRoleManager<RoleManager<Role>>();
+            //builder.AddSignInManager<SignInManager<User>>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 

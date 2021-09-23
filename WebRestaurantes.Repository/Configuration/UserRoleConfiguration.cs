@@ -15,20 +15,18 @@ namespace WebRestaurantes.Repository
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            builder.ToTable("AspNetUserRoles");
+            builder.ToTable("UserRole").HasNoKey();
             builder.Property(p => p.UserId).HasColumnName("UserId").IsRequired().HasColumnType(SqlServerDbTypes.INT);
             builder.Property(p => p.RoleId).HasColumnName("RoleId").IsRequired().HasColumnType(SqlServerDbTypes.INT);
 
-            builder.HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            builder.HasOne(ur => ur.Role)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RoleId)
+            builder.HasOne(ur => ur.User)
+                .WithOne()
+                .HasForeignKey<UserRole>(ur => ur.UserId)
                 .IsRequired();
 
-            builder.HasOne(ur => ur.User)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.UserId)
+            builder.HasOne(ur => ur.Role)
+                .WithOne()
+                .HasForeignKey<UserRole>(ur => ur.RoleId)
                 .IsRequired();
         }
     }
