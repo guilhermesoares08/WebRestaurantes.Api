@@ -10,6 +10,7 @@
             public const string NVARCHAR_MAX = "NVARCHAR(MAX)";
             public const string BIT = "BIT";
             public const string DATE = "DATE";
+            public const string TIME = "TIME";
         }
     }
 }

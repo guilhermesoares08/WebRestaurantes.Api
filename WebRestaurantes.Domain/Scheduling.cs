@@ -19,5 +19,9 @@ namespace WebRestaurantes.Domain
 
         public DateTime? UpdateDate { get;set; }
 
+        public TimeSpan? ScheduleTime { get; set; }
+
+        public int? StatusId { get; set; }
+
     }
 }
