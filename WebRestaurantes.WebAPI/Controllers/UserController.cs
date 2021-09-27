@@ -82,7 +82,7 @@ namespace WebRestaurantes.WebAPI.Controllers
         {
             try
             {
-                User usr = _authenticationService.ValidateUser(userLogin.Login, userLogin.Password);                
+                User usr = _authenticationService.ValidateUser(userLogin.UserName, userLogin.Password);
 
                 if (usr != null)
                 {
