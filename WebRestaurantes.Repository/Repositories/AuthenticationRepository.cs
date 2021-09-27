@@ -30,7 +30,12 @@ namespace WebRestaurantes.Repository
                 {
                     objRet = item.Clone();
                     objRet.Password = GenerateMd5(objRet.Password);                    
-                }
+                }                
+            }
+
+            if (objRet == null)
+            {
+                return null;
             }
 
             var userRole = GetUserRoleByUserId(objRet.Id);

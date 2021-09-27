@@ -95,7 +95,7 @@ namespace WebRestaurantes.WebAPI.Controllers
                     });
                 }
 
-                return Unauthorized();
+                return Unauthorized("Usuário não encontrado");
             }
             catch (System.Exception ex)
             {

@@ -10,9 +10,9 @@ namespace WebRestaurantes.Domain
 
         }
 
-        public User ValidateUser(string email, string password)
+        public User ValidateUser(string login, string password)
         {
-            return _repository.ValidateUser(email, password);
+            return _repository.ValidateUser(login, password);
         }
 
         public User GetUserByLogin(string login)
