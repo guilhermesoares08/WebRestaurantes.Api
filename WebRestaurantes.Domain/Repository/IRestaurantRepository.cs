@@ -9,6 +9,8 @@ namespace WebRestaurantes.Domain
 
         Task<Restaurant> GetRestaurantAsyncById(int id, bool includeImages = false);
 
-        Task<List<Restaurant>> GetRestaurantAsyncByText(string text);        
+        Task<List<Restaurant>> GetRestaurantAsyncByText(string text);
+
+        Restaurant GetRestaurantByVendorId(string vendorId);
     }
 }

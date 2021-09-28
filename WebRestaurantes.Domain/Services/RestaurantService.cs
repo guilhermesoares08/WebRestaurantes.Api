@@ -24,5 +24,10 @@ namespace WebRestaurantes.Domain
         {
             return _repository.GetRestaurantAsyncByText(text);
         }
+
+        public Restaurant GetRestaurantByVendorId(string vendorId)
+        {
+            return _repository.GetRestaurantByVendorId(vendorId);
+        }
     }
 }

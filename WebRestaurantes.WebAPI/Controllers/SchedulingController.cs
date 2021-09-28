@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebRestaurantes.Repository;
-using WebRestaurantes.Repository.Interfaces;
+using System.Threading.Tasks;
 using WebRestaurantes.Domain;
-using AutoMapper;
-using WebRestaurantes.WebAPI.Dtos;
-using System.IO;
-using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Authorization;
+
 namespace WebRestaurantes.WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -30,30 +22,11 @@ namespace WebRestaurantes.WebAPI.Controllers
          
         [HttpPost("{restaurantId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(int restaurantId,[FromBody] ScheduleDate scheduleDate)
-        {
-            try
-            {                
-                var results = await _schedulingService.GetScheduleByRestaurant(restaurantId);
-
-                return Ok(results);
-            }
-            catch (System.Exception ex)
-            {
-                string innerEx = "";//ex.InnerException.Message;
-                string exMessage = ex.Message;
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou{exMessage + "|" + innerEx}");
-            }
-        }
-
-
-        [HttpPost("availableSchedules/{restaurantId}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAvailableSchedules(int restaurantId)
+        public IActionResult Get(int restaurantId, [FromBody] ScheduleFilter obj)
         {
             try
             {
-                var results = await _schedulingService.GetScheduleByRestaurant(restaurantId);
+                var results = _schedulingService.GetAvailableScheduling(restaurantId, obj.ScheduleDate, obj.ScheduleTime, obj.RestaurantVendorId);
 
                 return Ok(results);
             }

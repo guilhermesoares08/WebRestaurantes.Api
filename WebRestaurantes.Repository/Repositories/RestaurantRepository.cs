@@ -60,5 +60,22 @@ namespace WebRestaurantes.Repository
             query = query.AsNoTracking();
             return await query.ToListAsync();
         }
+
+        public Restaurant GetRestaurantByVendorId(string vendorId)
+        {
+            IQueryable<Restaurant> query = _webRestaurantesContext.Restaurants;
+
+            query = query.Include(r => r.Address)
+                            .ThenInclude(a => a.City)
+                            .ThenInclude(c => c.State);
+
+            query = query.Include(r => r.Extensions)
+                            .ThenInclude(r => r.DomainValue);
+            
+            query = query.Include(r => r.Images);
+
+            query = query.AsNoTracking().Where(r => r.VendorId.Equals(vendorId));
+            return query.First();
+        }
     }
 }

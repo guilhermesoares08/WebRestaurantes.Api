@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,28 @@ namespace WebRestaurantes.Repository
             _query = _webRestaurantesContext.Scheduling.FromSqlInterpolated($@"sp_Select_Scheduling {restaurantId}");
             var lstResult = await _query.ToListAsync();
             return lstResult;
+        }
+
+        public List<Scheduling> GetAvailableScheduling(int? restaurantId, DateTime? scheduleDate, TimeSpan? scheduleTime)
+        {           
+            IQueryable<Scheduling> query = _webRestaurantesContext.Scheduling;
+
+            if (restaurantId.HasValue)
+            {
+                query = query.AsNoTracking().Where(c => c.RestaurantId == restaurantId.Value);
+            }
+
+            if(scheduleDate.HasValue)
+            {
+                query = query.AsNoTracking().Where(c => c.ScheduleDate.Value.Date >= scheduleDate.Value.Date);
+            }
+
+            if (scheduleTime.HasValue)
+            {
+                query = query.AsNoTracking().Where(c => c.ScheduleTime >= scheduleTime);
+            }
+
+            return query.ToList();
         }
     }
 }

@@ -14,4 +14,9 @@ namespace WebRestaurantes.Domain
             this.IsActive = true;
         }
     }
+    public enum DomainEnum : int
+    {
+        CuisineType = 1,
+        TableSite = 2
+    }
 }
