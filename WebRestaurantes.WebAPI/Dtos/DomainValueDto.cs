@@ -1,7 +1,7 @@
 using System;
 using WebRestaurantes.Domain;
 
-namespace WebRestaurantes.WebAPI.Dtos
+namespace WebRestaurantes.WebAPI
 {
     public class DomainValueDto
     {

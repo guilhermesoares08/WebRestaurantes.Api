@@ -22,6 +22,8 @@ namespace WebRestaurantes.WebAPI.Dtos
         public List<RestaurantExtensionDto> Extensions { get; set; }
         public List<TableDto> Tables { get; set; }
 
+        RestaurantOpeningHourDto OpeningHour { get; set; }
+
         public UserDto Owner { get; set; }
     }
 }

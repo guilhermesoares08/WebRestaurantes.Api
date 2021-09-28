@@ -1,6 +1,6 @@
 using System;
 
-namespace WebRestaurantes.WebAPI.Dtos
+namespace WebRestaurantes.WebAPI
 {
     public class SchedulingDto
     {

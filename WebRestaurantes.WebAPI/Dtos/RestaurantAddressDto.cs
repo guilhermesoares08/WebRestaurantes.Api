@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using WebRestaurantes.Domain;
 
-namespace WebRestaurantes.WebAPI.Dtos
+namespace WebRestaurantes.WebAPI
 {
     public class RestaurantAddressDto
     {

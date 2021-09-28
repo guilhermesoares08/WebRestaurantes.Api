@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebRestaurantes.WebAPI.Dtos
+namespace WebRestaurantes.WebAPI
 {
     public class DomainDto
     {
